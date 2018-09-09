@@ -9,7 +9,7 @@ import torch
 #------------------------------------------------------------------------------
 data_params = {}
 
-data_params["batch_size"] = 1024
+data_params["batch_size"] = 2048
 data_params["num_workers"] = 8
 data_params["pin_memory"] = False
 
@@ -36,7 +36,7 @@ nn_params["hidden_dropout"] = 0.5
 #------------------------------------------------------------------------------
 opt_params = {}
 
-opt_params["lr"] = 1e-3
+opt_params["lr"] = 2e-3
 
 
 #------------------------------------------------------------------------------

@@ -19,20 +19,16 @@ def compute_fisher(model, X, Y):
 		fishers.append(torch.zeros_like(param))
 
 	# # Compute the FIM (get mean of gradients)
-	# diff_means = [0.] * (n_samples-1)
 	# logits = model(X)
 	# loglikelihoods = F.log_softmax(logits, dim=1)[range(n_samples), Y]
 	# for i in range(n_samples):
 	# 	loglikelihood = loglikelihoods[i]
 	# 	loglikelihood.backward(retain_graph=True)
 	# 	for idx, param in enumerate(model.parameters()):
-	# 		if i>0:
-	# 			delta = (param.grad**2)/(i+1) - fishers[idx]/(i*(i+1))
-	# 			diff_means[i-1] += torch.abs(delta).sum()
 	# 		fishers[idx] += param.grad**2
 	# for idx, param in enumerate(model.parameters()):
 	# 	fishers[idx] /= n_samples
-	# return fishers, diff_means
+	# return fishers
 
 	# Compute the FIM (get mean of loglikelihoods)
 	logits = model(X)
@@ -53,7 +49,6 @@ def ewc_loss(logits, targets, lamda, fishers, prev_opt_thetas, cur_thetas):
 		fisher = fishers[i]
 		prev_opt_theta = prev_opt_thetas[i]
 		cur_theta = cur_thetas[i]
-		delta = ((prev_opt_theta-cur_theta)**2).sum()
 		loss += lamda/2 * torch.sum(fisher * (prev_opt_theta-cur_theta)**2)
 	return loss
 

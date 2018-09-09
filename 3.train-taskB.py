@@ -19,8 +19,6 @@ from models import NeuralNetwork, test, CheckPoint, EarlyStopping
 #------------------------------------------------------------------------------
 def permute_image(img, ind_permute):
 	"""ind_permute: numpy ndarray, ind_permute shape: (28,)"""
-	ind_permute = [14,27,24,1,23,0,9,12,10,17,16,22,13,11,
-					8,25,2,5,21,4,26,20,19,7,3,15,18,6]
 	img_new = np.array(img)[ind_permute, :]
 	return Image.fromarray(img_new)
 
@@ -76,6 +74,7 @@ base_loss_fn = torch.nn.CrossEntropyLoss(reduction="elementwise_mean")
 
 # Generate permute indices
 ind_permute = np.arange(0, 28)
+np.random.seed(0)
 np.random.shuffle(ind_permute)
 np.save("permuteB.npy", ind_permute)
 

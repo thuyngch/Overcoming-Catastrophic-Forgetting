@@ -3,7 +3,6 @@
 #------------------------------------------------------------------------------
 import torch
 from torchvision import datasets, transforms
-from matplotlib import pyplot as plt
 
 from models import NeuralNetwork
 from ewc import compute_fisher
@@ -40,10 +39,3 @@ fishers = compute_fisher(model, X, Y)
 for fim in fishers:
 	print(fim)
 torch.save(fishers, "fisherA.pth")
-
-
-# # Visualize the diff_means
-# plt.figure(1)
-# plt.plot(diff_means)
-# plt.grid(True)
-# plt.show()
