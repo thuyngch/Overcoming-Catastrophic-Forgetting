@@ -7,8 +7,8 @@ An implementation of the paper [Overcoming catastrophic forgetting in neural net
 
 Table of contents
 =================
-- [What is the problem?](#what-is-the-problem-)
-- [How does the paper solve the problem?](#how-does-the-paper-solve-the-problem-)
+- [What is the problem?](#what-is-the-problem)
+- [How does the paper solve the problem?](#how-does-the-paper-solve-the-problem)
 - [Project description](#project-description)
 - [Result](#result)
 
