@@ -22,7 +22,7 @@ By calculating Fisher Information Matrix (FIM), one can turn out how much parame
 
 
 # Project description
-My work is to implement the Superviced-learning experiment of the paper. Files, *"1.train-taskA.py"*, *"2.compute-fisherA.py"*, and *"3.train-taskB.py"*, are main executions. Meanwhile, utility functions are stored in files *"models.py"* and *"ewc.py"*.
+My work is to implement the Superviced-learning experiment of the paper. Files, *"1.train-taskA.py"*, *"2.compute-fisherA.py"*, and *"3.train-taskB.py"*, are main executions. Meanwhile, utility functions are stored in files *"models.py"* and *"ewc.py"*. Besides, file *"config.py"* is used to configure parameters for the learning progress.
 
 
 # Result
