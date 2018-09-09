@@ -23,3 +23,23 @@ Table of contents
 
 
 # Result
+
+**Metrics of the last epoch, using conventional transfer learning configuration**
+<p align="center">
+  <img src="https://github.com/AntiAegis/Overcoming-Catastrophic-Forgetting/blob/raw_code/pics/normal-last-epoch.png" width="700" alt="accessibility text">
+</p>
+
+**Metrics of the last epoch, using EWC configuration**
+<p align="center">
+  <img src="https://github.com/AntiAegis/Overcoming-Catastrophic-Forgetting/blob/raw_code/pics/ewc-last-epoch.png" width="700" alt="accessibility text">
+</p>
+
+**Learning progress, using conventional transfer learning configuration**
+<p align="center">
+  <img src="https://github.com/AntiAegis/Overcoming-Catastrophic-Forgetting/blob/raw_code/pics/normal-plot.png" width="1000" alt="accessibility text">
+</p>
+
+**Learning progress, using EWC configuration**
+<p align="center">
+  <img src="https://github.com/AntiAegis/Overcoming-Catastrophic-Forgetting/blob/raw_code/pics/ewc-plot.png" width="1000" alt="accessibility text">
+</p>
