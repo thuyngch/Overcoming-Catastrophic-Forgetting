@@ -11,7 +11,7 @@ from copy import deepcopy
 
 from ewc import train_ewc
 from config import data_params, nn_params, opt_params, earlystop_params, params
-from models import NeuralNetwork, test, CheckPoint, EarlyStopping
+from models import NeuralNetwork, test, CheckPoint, EarlyStopping, Logger
 
 
 #------------------------------------------------------------------------------
@@ -89,26 +89,34 @@ for fisher in fishers_cpu:
 # Create callbacks
 checkpoint = CheckPoint(model, "modelB.ckpt")
 earlystop = EarlyStopping(**earlystop_params)
+list_metrics = ["loss_trainB", "loss_testB", "acc_testA", "acc_testB"]
+logger = Logger(list_metrics=list_metrics, logger_file="log-metrics.npy")
 
 
 # Train and evaluate
 flg_stop = False
 for epoch in range(1, params["n_epochs"] + 1):
 	print("\n[EPOCH %d]" % (epoch))
-	loss_train = train_ewc(model, trainB_loader, optimizer, base_loss_fn,
+	loss_trainB = train_ewc(model, trainB_loader, optimizer, base_loss_fn,
 						params["lamda"], fishers, prev_opt_thetas, epoch,
 						description="Train on task B")
 	print()
-	loss_test, acc_test = test(model, testB_loader, base_loss_fn,
+	loss_testB, acc_testB = test(model, testB_loader, base_loss_fn,
 						description="Test on task B")
 	print()
-	test(model, testA_loader, base_loss_fn,
+	_, acc_testA = test(model, testA_loader, base_loss_fn,
 						description="Test on task A")
 	print()
 
 	# Callbacks
-	checkpoint.backup(loss_test)
-	flg_stop = earlystop.check(loss_test)
+	checkpoint.backup(loss_testB)
+	flg_stop = earlystop.check(loss_testB)
+	logger.update(loss_trainB=loss_trainB, loss_testB=loss_testB,
+					acc_testA=acc_testA, acc_testB=acc_testB)
 	if flg_stop:
 		break
 	print("------------------------------------------------------------------")
+
+
+# Visualize the training progress
+logger.visualize(fg_idx=1)

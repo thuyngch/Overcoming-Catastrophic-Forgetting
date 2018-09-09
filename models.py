@@ -4,6 +4,7 @@
 import numpy as np
 from tqdm import tqdm
 from functools import reduce
+from matplotlib import pyplot as plt
 
 import torch
 import torch.nn as nn
@@ -144,3 +145,54 @@ class EarlyStopping(object):
 			self.best_loss_valid = loss_valid
 
 		return False
+
+
+#------------------------------------------------------------------------------
+#	Logger
+#------------------------------------------------------------------------------
+class Logger(object):
+	def __init__(self, list_metrics, logger_file="log.npy"):
+		super(Logger, self).__init__()
+		self.logger_file = logger_file
+
+		self.metrics = {}
+		for metric_name in list_metrics:
+			self.metrics[metric_name] = []
+
+
+	def update(self, **kwargs):
+		for key, value in kwargs.items():
+			self.metrics[key].append(value)
+		np.save(self.logger_file, self.metrics)
+
+
+	def load(self):
+		self.metrics = np.load(self.logger_file).item()
+
+
+	def visualize(self, fg_idx=1):
+		plt.figure(fg_idx)
+		metric_names = list(self.metrics.keys())
+
+		plt.subplot(1,2,1); plt.title("Loss")
+		legends = []
+		for metric_name in metric_names:
+			if not "loss" in metric_name: continue
+			metric_val = self.metrics[metric_name]
+			n_samples = len(metric_val)
+			plt.plot(range(1, n_samples+1), metric_val)
+			legends.append(metric_name)
+		plt.legend(legends); plt.grid(True)
+		plt.xlabel("epoch"); plt.ylabel("loss")
+
+		plt.subplot(1,2,2); plt.title("Accuracy")
+		legends = []
+		for metric_name in metric_names:
+			if not "acc" in metric_name: continue
+			metric_val = self.metrics[metric_name]
+			n_samples = len(metric_val)
+			plt.plot(range(1, n_samples+1), metric_val)
+			legends.append(metric_name)
+		plt.legend(legends); plt.grid(True)
+		plt.xlabel("epoch"); plt.ylabel("accuracy")
+		plt.show()
